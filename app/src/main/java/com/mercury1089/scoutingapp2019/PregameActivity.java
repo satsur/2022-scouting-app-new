@@ -77,11 +77,19 @@ public class PregameActivity extends AppCompatActivity {
     private MediaPlayer rooster;
     private ImageView slackCenter;
 
+    /*
+    - This is where you initialize the activity:
+        - Define views (screen elements) here
+        - Make sure relevant HashMaps aren't empty using checkNullOrEmpty()
+        - Define EventListeners -> Not using lambda to make it easier for newcomers
+        -
+        -
+     */
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pregame);
 
-        //initializers
+        // Initialize views here
         scouterNameInput = findViewById(R.id.ScouterNameInput);
         matchNumberInput = findViewById(R.id.MatchNumberInput);
         teamNumberInput = findViewById(R.id.TeamNumberInput);
@@ -96,6 +104,8 @@ public class PregameActivity extends AppCompatActivity {
         settingsButton = findViewById(R.id.SettingsButton);
 
         rooster = MediaPlayer.create(PregameActivity.this, R.raw.sound);
+
+        // Make sure hash maps are not empty/null, then get HashMaps and set password for settings screen
         HashMapManager.checkNullOrEmpty(HashMapManager.HASH.SETTINGS);
         HashMapManager.checkNullOrEmpty(HashMapManager.HASH.SETUP);
         settingsHashMap = HashMapManager.getSettingsHashMap();
@@ -481,6 +491,10 @@ public class PregameActivity extends AppCompatActivity {
         return super.dispatchTouchEvent(ev);
     }
 
+    /*
+    - Validate text field input and toggle values to make sure it is safe (and necessary) to
+    - move into the MatchActivity
+     */
     private void startButtonCheck() {
         if(scouterNameInput.getText().length() > 0 &&
                 matchNumberInput.getText().length() > 0 &&
@@ -494,6 +508,10 @@ public class PregameActivity extends AppCompatActivity {
             startButton.setEnabled(false);
     }
 
+    /*
+    - Check to see if there's any values that need to be cleared
+    - (if nothing is filled out, clear button should be disabled)
+     */
     private void clearButtonCheck() {
         if(scouterNameInput.getText().length() > 0 ||
                 matchNumberInput.getText().length() > 0 ||
@@ -507,7 +525,16 @@ public class PregameActivity extends AppCompatActivity {
             clearButton.setEnabled(false);
     }
 
+    /*
+    - Big complicated looking function, so let's break it down
+        - This is called on most events (so in all the View EventListeners)
+        - It updates hashmaps and the visual appearance of Views
+     */
     private void updateXMLObjects(boolean updateText){
+        /*
+        - updateText should only be true if you want to reset the basic info fields to the stored hashmap values
+            - e.g. if you're returning from SettingsActivity or if you used the "Clear" button
+         */
         if(updateText) {
             scouterNameInput.setText(setupHashMap.get("ScouterName"));
             matchNumberInput.setText(setupHashMap.get("MatchNumber"));
@@ -546,15 +573,6 @@ public class PregameActivity extends AppCompatActivity {
         startButtonCheck();
         clearButtonCheck();
     }
-
-    //template for implementing a button click for a rectangle for starting position
-    /*public void LL1Click (View view) {
-        setupHashMap.put("StartingPosition", "LL1");
-        startButtonCheck();
-        clearButtonCheck();
-        makeCirclesInvisible();
-        LL1Circle.setVisibility(View.VISIBLE);
-    }*/
 
     //QR Generation
     private Bitmap TextToImageEncode(String Value) throws WriterException {
