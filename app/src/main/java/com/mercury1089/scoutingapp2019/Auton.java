@@ -85,7 +85,7 @@ public class Auton extends Fragment {
     private ImageView leftEdgeBar;
     private ImageView rightEdgeBar;
 
-    //other variables
+    // other variables
     private static CountDownTimer timer;
     private boolean firstTime = true;
     private boolean running = true;
