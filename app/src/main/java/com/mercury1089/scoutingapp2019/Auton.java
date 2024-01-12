@@ -96,6 +96,9 @@ public class Auton extends Fragment {
     private ValueAnimator teleopButtonAnimation;
     private AnimatorSet animatorSet;
 
+    /*
+    - Runs when a new instance of this fragment is created (i.e. when it is first loaded in from PregameActivity.java)
+     */
     public static Auton newInstance() {
         Auton fragment = new Auton();
         Bundle args = new Bundle();
